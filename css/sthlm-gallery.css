@@ -1,0 +1,19 @@
+/*
+    Document   : sthlm-gallery
+    Created on : 2010-nov-15, 22:32:04
+    Author     : Patrik
+    Description:
+        Sthlm Gallery default css.
+*/
+
+
+
+.clear {clear: both;}
+
+.sthlm-gallery {clear: both;}
+.sthlm-thumb {float: left; margin: 0 13px 10px 0;}
+.sthlm-thumb-last {margin-right: 0; clear: right;}
+
+
+
+
