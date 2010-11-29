@@ -25,7 +25,8 @@ class sthlm_gallery {
 		// javascript på andmin sidan och med variablen ovan använder scripet bara på den sidan
 		add_action('admin_print_scripts-'. $admin_page, array(&$this,'js_admin'));
 		// admin css
-		add_action('admin_print_styles-'. $admin_page, array(&$this,'css_admin'));
+		//add_action('admin_print_styles-'. $admin_page, array(&$this,'css_admin'));
+		add_action('admin_print_styles', array(&$this,'css_admin'));
 
 		// js on all admin pages
 		//add_action('admin_print_scripts', array(&$this,'js_admin_edit'));

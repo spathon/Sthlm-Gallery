@@ -11,6 +11,7 @@ Author URI:
 /**
  * @todo
  *
+ * Edit img alt/title and so on in colorbox (dbclick? for edit or smal edit button on hover?)
  * add categories/tags to images
  * settings page
  * pagination
@@ -153,17 +154,33 @@ function sthlm_gallery_add_mce_popup(){
 		
 		jQuery(document).ready(function($){
 
+			$('#sthlm_display_style').find('img').live('click', function(){
+				var style = $(this).attr('data-style');
+				$('#sthlm_display_style_input').attr('value', style);
+
+				$('#sthlm_display_style').find('img').removeClass('sthlm-selected-style');
+				$(this).addClass('sthlm-selected-style');
+			});
+
+
 			var win = window.dialogArguments || opener || parent || top;
 			$('#add_sthlm_gallery_shortcode').click(function(){
 				var galleryID = $('#sthlm_select_gallery').val(),
 					rows = $('#sthlm_rows').val(),
-					rowsOut = '';
+					rowsOut = '',
+					style;
 
+				// number of img per row
 				if(rows > 0){
 					rowsOut = ' rows='+ rows;
 				}
+
+				// display style
+				style = ' style="'+ $('#sthlm_display_style_input').attr('value') +'"';
+
+
 			
-				win.send_to_editor('[sthlm_gallery id='+ galleryID + rowsOut +' ]');
+				win.send_to_editor('[sthlm_gallery id='+ galleryID + rowsOut + style +' ]');
 
 				// close thickbox
 				tb_remove();
@@ -196,7 +213,18 @@ function sthlm_gallery_add_mce_popup(){
 				echo '</select>';
 			endif; ?>
 
-			<input type="text" id="sthlm_rows" />
+			<label><?php _e('Rader', 'sthlm_gallery'); ?>
+				<input type="text" id="sthlm_rows" />
+			</label>
+			<div id="sthlm_display_style">
+				<img class="sthlm-style-thumbs sthlm-selected-style" src="<?php echo STHLM_GALLERY_PLUGIN_URL; ?>/images/style-mini-thumbs.gif" data-style="thumbs" />
+				<img class="sthlm-style-big-lightbox" src="<?php echo STHLM_GALLERY_PLUGIN_URL; ?>/images/style-big-lightbox.gif" data-style="big_lightbox" />
+				<img class="sthlm-style-big-with-thumbs" src="<?php echo STHLM_GALLERY_PLUGIN_URL; ?>/images/style-one-big.gif" data-style="big_with_thumbs" />
+				<input type="hidden" name="sthlm_display_style_input" id="sthlm_display_style_input" value="">
+			</div>
+			
+			
+			
 			<a class="button-secondary" href="#" id="add_sthlm_gallery_shortcode"><?php _e('Infoga', 'sthlm_gallery'); ?></a>
 		</div>
 	</div>
