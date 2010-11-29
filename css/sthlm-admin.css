@@ -5,10 +5,9 @@
 /*   EDIT pages/post
 /*
 /*********************************************************/
-.sthlm-selected-style {border: 1px solid #ccc;}
+.sthlm-selected-style {border: 1px solid #ccc; margin: 5px;}
 
-
-
+#sthlm_add_shortcode label {display: block}
 
 
 

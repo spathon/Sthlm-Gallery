@@ -16,6 +16,7 @@ Author URI:
  * settings page
  * pagination
  * better insert shortcode
+ * better structure on code
  * and much more
  *
  * clean the code
@@ -192,7 +193,7 @@ function sthlm_gallery_add_mce_popup(){
 	</script>
 
 	<div id="add_sthlm_gallery" style="display:none;">
-		<div class="wrap">
+		<div class="wrap" id="sthlm_add_shortcode">
 
 
 			<?php
@@ -217,9 +218,9 @@ function sthlm_gallery_add_mce_popup(){
 				<input type="text" id="sthlm_rows" />
 			</label>
 			<div id="sthlm_display_style">
-				<img class="sthlm-style-thumbs sthlm-selected-style" src="<?php echo STHLM_GALLERY_PLUGIN_URL; ?>/images/style-mini-thumbs.gif" data-style="thumbs" />
-				<img class="sthlm-style-big-lightbox" src="<?php echo STHLM_GALLERY_PLUGIN_URL; ?>/images/style-big-lightbox.gif" data-style="big_lightbox" />
-				<img class="sthlm-style-big-with-thumbs" src="<?php echo STHLM_GALLERY_PLUGIN_URL; ?>/images/style-one-big.gif" data-style="big_with_thumbs" />
+				<img class="sthlm-style-thumbs sthlm-selected-style" src="<?php echo STHLM_GALLERY_PLUGIN_URL; ?>/images/styles-mini-thumbs.gif" data-style="thumbs" />
+				<img class="sthlm-style-big-lightbox" src="<?php echo STHLM_GALLERY_PLUGIN_URL; ?>/images/styles-big-lightbox.gif" data-style="big_lightbox" />
+				<img class="sthlm-style-big-with-thumbs" src="<?php echo STHLM_GALLERY_PLUGIN_URL; ?>/images/styles-one-big.gif" data-style="big_with_thumbs" />
 				<input type="hidden" name="sthlm_display_style_input" id="sthlm_display_style_input" value="">
 			</div>
 			

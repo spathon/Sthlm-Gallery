@@ -23,6 +23,7 @@ class sthlm_gallery {
 		
 		$admin_page = add_media_page($this->title, $this->menu_title, $this->capability, $this->menu_slug, array(&$this, 'gallery_page'));
 		// javascript på andmin sidan och med variablen ovan använder scripet bara på den sidan
+		// new javascript on edit or the same?
 		add_action('admin_print_scripts-'. $admin_page, array(&$this,'js_admin'));
 		// admin css
 		//add_action('admin_print_styles-'. $admin_page, array(&$this,'css_admin'));
