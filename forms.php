@@ -44,7 +44,7 @@ if($_POST['form'] == 'add_gallery'):?>
 				 <textarea name="sthlm-gallery-content"></textarea>
 			 </label>
 			 <div>
-				 <a href="#" class="button-secondary" id="submit-sthlm-gallery-image-data"><?php _e('Spara', 'sthlm_gallery'); ?></a>
+				 <a href="#" class="button-secondary" id="sthlm_save_img_settings"><?php _e('Spara', 'sthlm_gallery'); ?></a>
 			 </div>
 		</div>
 	</form>

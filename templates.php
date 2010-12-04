@@ -14,6 +14,9 @@ function sthlm_img_thumb_template($img){
 	<div class="sthlm-thumb sthlm-thumb-<?php echo $img->ID; ?>" data-thumb-id="<?php echo $img->ID; ?>">
 		<div class="remove-sthlm-thumb"></div>
 		<img src="<?php echo $src[0]; ?>" alt="<?php echo esc_attr($img->post_title); ?>" />
+		
+		<!--  Edit thumb   -->
+		<a class="sthlm-edit-thumb-info" href="#sthlm-edit-thumb-info"><?php _e('Redigera', 'sthlm_gallery'); ?></a>
 
 		<?php sthlm_img_thumb_data_template($img); ?>
 		
@@ -29,9 +32,6 @@ function sthlm_img_thumb_data_template($img){ ?>
 		<div class="sthlm-thumb-excerpt hidden"><?php echo $img->post_excerpt; ?></div>
 		<div class="sthlm-thumb-content hidden"><?php echo $img->post_content; ?></div>
 		<div class="sthlm-thumb-guid hidden"><?php echo $img->guid; ?></div>
-		<a class="sthlm-gallery-edit-image-data" href="#sthlm-gallery-image-data">
-			<?php _e('Redigera', 'sthlm_gallery'); ?>
-		</a>
 	</div>
 <?php
 }

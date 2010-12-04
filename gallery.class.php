@@ -112,10 +112,10 @@ class sthlm_gallery {
 			)
 		);
 
-		// add category to images
-		//register_taxonomy('img_cat', 'attachment', array( 'hierarchical' => true, 'show_ui' => true	) );
-		//register_taxonomy_for_object_type('img_cat', 'attachment');
-		//add_post_type_support('attachment', 'img_cat');
+		// add category to images // TAGS or CATEGORIES?
+		register_taxonomy('img_cat', 'attachment', array( 'hierarchical' => false, 'show_ui' => true	) );
+		register_taxonomy_for_object_type('img_cat', 'attachment');
+		add_post_type_support('attachment', 'img_cat');
 
 	}
 

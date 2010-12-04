@@ -196,8 +196,8 @@
 }
 
 .sthlm-thumb img {
-	width:50px;
-	height:50px;
+	width:60px;
+	height:60px;
 }
 
 .remove-sthlm-thumb {
@@ -210,8 +210,23 @@
 	background:url(../images/remove-thumb.png) no-repeat;
 	cursor:pointer;
 }
-
 #sthlm_current_gallery_images .sthlm-thumb:hover .remove-sthlm-thumb { display:block; }
+
+
+.sthlm-edit-thumb-info {
+	display:none;
+	position:absolute;
+	top:-5px;
+	left:-5px;
+	width:16px;
+	height:16px;
+	background:url(../images/edit2.png) no-repeat;
+	cursor:pointer;
+	text-indent: -9999em;
+	text-align: left;
+	overflow: hidden;
+}
+.sthlm-thumb:hover .sthlm-edit-thumb-info { display:block; }
 
 /* img exist */
 .sthlm-thumb-exist {background: #000; cursor: default;}

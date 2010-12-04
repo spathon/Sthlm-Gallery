@@ -302,6 +302,88 @@ jQuery(document).ready(function($){
 
 
 
+
+
+	/**
+	 *
+	 *   EDIT IMG
+	 *
+	 */
+
+	// Open Cbox to edit image data
+	$('.sthlm-edit-thumb-info').live('click', function(){
+		// save for performance and this as value futher down
+		var $this = $(this),
+			$infoBox = $this.parent().find('.sthlm-thumb-data');
+
+
+		// set post data
+		var data = {
+			action: 'sthlm_load_lightbox_form_ajax',
+			form:  'edit_img'
+		};
+		$.post(ajaxurl, data, function(response) {
+
+			$('#sthlm_lightbox').html(response);
+			$.colorbox({inline:true, href:"#sthlm_lightbox"}, function(){
+				$('#sthlm_edit_preview').attr('src', $this.parent().find('img').attr('src'));
+				$('input[name="sthlm-gallery-id"]').val($infoBox.find('.sthlm-thumb-id').text());
+				$('input[name="sthlm-gallery-title"]').val($infoBox.find('.sthlm-thumb-title').text());
+				$('textarea[name="sthlm-gallery-excerpt"]').val($infoBox.find('.sthlm-thumb-excerpt').text());
+				$('textarea[name="sthlm-gallery-content"]').val($infoBox.find('.sthlm-thumb-content').text());
+			});
+		});
+	});
+
+	// save settings
+	$('#sthlm_save_img_settings').live('click', function(){
+		var id = $('input[name="sthlm-gallery-id"]').val(),
+			title = $('input[name="sthlm-gallery-title"]').val(),
+			excerpt = $('textarea[name="sthlm-gallery-excerpt"]').val(),
+			content = $('textarea[name="sthlm-gallery-content"]').val();
+			
+		// set post data
+		var data = {
+			action: 'sthlm_gallery_edit_image_data',
+			id: id,
+			title: title,
+			excerpt: excerpt,
+			content: content
+		};
+
+		// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+		$.post(ajaxurl, data, function(response) {
+			//console.log(response)
+			//$('#gallery_dir_wrapper').prepend(response);
+			var $infoBox = $('.sthlm-thumb-'+ id).find('.sthlm-thumb-data');
+			//console.log($infoBox);
+			// update the data
+			$infoBox.find('.sthlm-thumb-title').text(title);
+			$infoBox.find('.sthlm-thumb-excerpt').text(excerpt);
+			$infoBox.find('.sthlm-thumb-content').text(content);
+			
+			$.colorbox.close();
+		});
+		return false;
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/*
 	var dropState = true; // prevent drag n drop if no gallery is set
 
