@@ -85,6 +85,7 @@
 
 			<!--   Filter by tags   -->
 			<div id="sthlm_filter_by_tags">
+				<label for="sthlm_select_tag"><?php _e('Taggar', 'sthlm_gallery'); ?></label>
 				<?php
 				$args = array(
 					'show_option_all' => 'V&auml;lj tag',
