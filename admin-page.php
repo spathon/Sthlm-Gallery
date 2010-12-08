@@ -83,6 +83,20 @@
 				<input class="button-secondary" type="submit" value="Sök" />
 			</div>
 
+			<!--   Filter by tags   -->
+			<div id="sthlm_filter_by_tags">
+				<?php
+				$args = array(
+					'show_option_all' => 'V&auml;lj tag',
+					'taxonomy' => 'img_cat',
+					'name' => 'sthlm_select_tag',
+					'id' => 'sthlm_select_tag',
+					'orderby' => 'name'
+				);
+				wp_dropdown_categories($args);
+				?>
+			</div>
+
 			<!--   Add media   -->
 			<div class="add-media">
 				<a title="Add an Image" class="thickbox" id="add_image" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400">

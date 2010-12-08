@@ -20,6 +20,9 @@ jQuery(document).ready(function($){
 
 	// Add class to all img in the current gallery
 	var imgInGallery = function(){
+		// temp if gallery is not selected TEMP
+		if($currImgContainer.find('.sthlm-thumb').length == 0) return false;
+
 		var imagesString = $currImages.attr('data-gallery-thumbs'),
 			images = imagesString.split(','),
 			numImg = (images.length - 1);
@@ -297,7 +300,27 @@ jQuery(document).ready(function($){
 	 });
 
 
+	 /**
+	  *
+	  *   FILTER BY TAGS
+	  *
+	  */
+	 $('#sthlm_select_tag').change( function(){
+	 	var id = $(this).val(),
+			data = {
+				id: id,
+				action: 'sthlm_filter_by_tags_ajax'
+			};
 
+		// if no one is selected
+		if(id === 0) return false;
+
+	 	$.post(ajaxurl, data, function(data) {
+			$allImagesContainer.html(data);
+			sthlmDragDrop();
+			imgInGallery();
+		});
+	 });
 
 
 
@@ -329,6 +352,7 @@ jQuery(document).ready(function($){
 				$('#sthlm_edit_preview').attr('src', $this.parent().find('img').attr('src'));
 				$('input[name="sthlm-gallery-id"]').val($infoBox.find('.sthlm-thumb-id').text());
 				$('input[name="sthlm-gallery-title"]').val($infoBox.find('.sthlm-thumb-title').text());
+				$('input[name="sthlm-gallery-tags"]').val($infoBox.find('.sthlm-thumb-tags').text());
 				$('textarea[name="sthlm-gallery-excerpt"]').val($infoBox.find('.sthlm-thumb-excerpt').text());
 				$('textarea[name="sthlm-gallery-content"]').val($infoBox.find('.sthlm-thumb-content').text());
 			});
@@ -340,7 +364,8 @@ jQuery(document).ready(function($){
 		var id = $('input[name="sthlm-gallery-id"]').val(),
 			title = $('input[name="sthlm-gallery-title"]').val(),
 			excerpt = $('textarea[name="sthlm-gallery-excerpt"]').val(),
-			content = $('textarea[name="sthlm-gallery-content"]').val();
+			content = $('textarea[name="sthlm-gallery-content"]').val(),
+			tags = $('input[name="sthlm-gallery-tags"]').val();
 			
 		// set post data
 		var data = {
@@ -348,7 +373,8 @@ jQuery(document).ready(function($){
 			id: id,
 			title: title,
 			excerpt: excerpt,
-			content: content
+			content: content,
+			tags: tags
 		};
 
 		// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
@@ -361,6 +387,7 @@ jQuery(document).ready(function($){
 			$infoBox.find('.sthlm-thumb-title').text(title);
 			$infoBox.find('.sthlm-thumb-excerpt').text(excerpt);
 			$infoBox.find('.sthlm-thumb-content').text(content);
+			$infoBox.find('.sthlm-thumb-tags').text(tags);
 			
 			$.colorbox.close();
 		});

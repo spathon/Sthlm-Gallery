@@ -43,6 +43,10 @@ if($_POST['form'] == 'add_gallery'):?>
 				 <strong><?php _e('Bildtext', 'sthlm_gallery'); ?></strong>
 				 <textarea name="sthlm-gallery-content"></textarea>
 			 </label>
+			 <label class="sthlm-gallery-input-label">
+				<strong><?php _e('Taggar', 'sthlm_gallery'); ?></strong>
+				<input type="text" name="sthlm-gallery-tags" />
+			 </label>
 			 <div>
 				 <a href="#" class="button-secondary" id="sthlm_save_img_settings"><?php _e('Spara', 'sthlm_gallery'); ?></a>
 			 </div>

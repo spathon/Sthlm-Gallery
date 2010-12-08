@@ -64,9 +64,9 @@ if(isset($sthlm_gallery)){
 
 	// Administration Actions
 	// add menu page
-	add_action('admin_menu', array($sthlm_gallery,'init'));
+	add_action('admin_menu', array($sthlm_gallery,'init'), 1);
 	// create post type
-	add_action('admin_menu', array($sthlm_gallery, 'sthlm_add_gallery_post_type'));
+	add_action('init', array($sthlm_gallery, 'sthlm_add_gallery_post_type'));
 
 
 	// AJAX
@@ -77,9 +77,13 @@ if(isset($sthlm_gallery)){
 	add_action('wp_ajax_sthlm_gallery_ajax_save_order', array($sthlm_gallery, 'sthlm_gallery_ajax_save_order')); // save the order in the gallery
 	// insert the correct images when folder is chosen
 	add_action('wp_ajax_sthlm_get_current_gallery_images_ajax', array($sthlm_gallery, 'sthlm_get_current_gallery_images_ajax'));
-	add_action('wp_ajax_sthlm_gallery_query_attachments', array($sthlm_gallery, 'sthlm_gallery_query_attachments'));
-	add_action('wp_ajax_sthlm_gallery_edit_image_data', array($sthlm_gallery, 'sthlm_gallery_edit_image_data'));	
 	
+	add_action('wp_ajax_sthlm_gallery_edit_image_data', array($sthlm_gallery, 'sthlm_gallery_edit_image_data'));	
+
+	/*  FILTERS  */
+	add_action('wp_ajax_sthlm_gallery_query_attachments', array($sthlm_gallery, 'sthlm_gallery_query_attachments'));
+	// filter by tag
+	add_action('wp_ajax_sthlm_filter_by_tags_ajax', array($sthlm_gallery, 'sthlm_filter_by_tags_ajax'));
 }
 
 
@@ -247,7 +251,8 @@ function sthlm_gallery_add_mce_popup(){
 function sthlm_gallery_shortcode($atts, $content = null){
 	extract(shortcode_atts(array(
 		"id" => false,
-		"rows" => 4
+		"rows" => 4,
+		"style" => 'thumbs'
 	), $atts));
 
 	$out = "";
@@ -257,36 +262,19 @@ function sthlm_gallery_shortcode($atts, $content = null){
 		$i = 0;
 		$row_i = 0;
 		if(!empty($meta)){
-			$out .= '<div class="sthlm-gallery" id="sthlm_gallery_'.$id.'">';
-			foreach (  $meta as $m){
+			
+			switch ($style){
+				case 'big_lightbox':
+					include('display/big_lightbox.php');
+					break;
 
-				$row_i++;
-				$img = get_post($m);
-				$class = 'sthlm-thumb sthlm-thumb-'. $img->ID .' sthlm-thumb-col-'.$row_i;
+				case 'thumbs':
+				default:
+					include('display/thumbs.php');
+					break;
+			}
 
-				if($row_i == 1){
-					$class .= ' sthlm-thumb-first';
-				}elseif($row_i >= $rows){
-					$class .= ' sthlm-thumb-last';
-				}
 
-				$src = wp_get_attachment_image_src($img->ID, 'thumbnail'); // The thumb
-				$href = wp_get_attachment_image_src($img->ID, 'full'); // The img
-				$out .= '<div class="'.$class.'" id="sthlm_thumb_'.$i.'">';
-					$out .= '<a class="colorbox" href="'. $href[0].'" alt="'. $img->post_title .'" title="'.$img->post_content.'" rel="sthlm_gallery['.$id.']" />';
-						$out .= '<img src="'. $src[0].'" alt="'. $img->post_title .'" title="'.$img->post_content.'" />';
-					$out .= '</a>';
-				$out .= '</div>';
-				
-				if($row_i >= $rows){
-					$row_i = 0;
-					$out .= '<div class="clear"></div>';
-				}
-				
-				$i++;
-				
-			} // end foreach
-			echo '</div>'; // end .sthlm-gallery
 		}// end if
 	}
 	return $out;

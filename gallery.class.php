@@ -301,12 +301,54 @@ class sthlm_gallery {
     	exit;
 
 	}
+	
+	
+	/* FLITER BY TAG */
+	function sthlm_filter_by_tags_ajax() {
+
+
+		$id = (int) $_POST['id'];
+
+		$term = get_term( $id, 'img_cat' );
+
+		//$arg = array('img_cat' => 8);
+		$args = array(
+			'img_cat' => $term->slug,
+			'post_type' => 'attachment',
+			'post_mime_type' => 'image',
+			'numberposts' => -1,
+			'orderby' => 'menu_order',
+			'order' => 'ASC'
+		);
+
+		$images = get_posts($args);
+    	$i = 0;
+    	// loop all images
+    	if(!empty($images)): foreach ( (array) $images as $img ):
+
+    	    // echo the thumbs
+			sthlm_img_thumb_template($img); // templates.php
+
+    	endforeach; else:
+
+    	    _e('Inga bilder existerar', 'sthlm_gallery');
+
+    	endif;
+    	exit;
+
+	}
+	
+	
+	
+	/*   EDIT IMG   */
 
 	function sthlm_gallery_edit_image_data(){
+		global $wp_taxonomies;
 		$id = $_POST['id'];
 		$title = $_POST['title'];
 		$excerpt = $_POST['excerpt'];
-		$content = $_POST['content'];		
+		$content = $_POST['content'];
+		$tags = $_POST['tags'];
 		
 		// Check if post is set
 		if(!empty($id)){
@@ -323,7 +365,20 @@ class sthlm_gallery {
 
 			// Insert the post into the database
 			$pid = wp_update_post( $my_post );
-			echo var_dump(get_post($pid));
+			if($pid){
+				//wp_set_post_terms( $pid, array('test','patrik'), 'img_cat' );
+				// wp_set_object_terms( $pid, array('test','patrik'), 'img_cat' ) ERROR taxonomy don't exist
+
+				wp_set_post_terms($pid, $tags, 'img_cat');
+				/*
+				echo '<pre>';
+				print_r($wp_taxonomies);
+				print_r(wp_set_object_terms($pid, array_map('trim', preg_split('/,+/', $tags)), 'img_cat', false));
+				echo '<pre>';
+				 */
+			}
+			echo $pid;
+			//echo var_dump(get_post($pid));
 		}
 		die();		
 	}

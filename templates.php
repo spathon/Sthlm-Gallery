@@ -27,11 +27,24 @@ function sthlm_img_thumb_template($img){
 function sthlm_img_thumb_data_template($img){ ?>
 
 	<div class="sthlm-thumb-data">
-		<div class="sthlm-thumb-id hidden"><?php echo $img->ID; ?></div>
+
+		<?php
+		// TAGS
+		$tags = wp_get_object_terms($img->ID, 'img_cat');
+		$num = count($tags);
+		$tagsOut = array();
+		if(!empty($tags)): foreach($tags as $t):
+			$tagsOut[] = $t->name;
+		endforeach; endif;
+
+		$tagsOut = implode(',', $tagsOut);
+		?>
+
+		<div class="sthlm-thumb-id"><?php echo $img->ID; ?></div>
 		<div class="sthlm-thumb-title"><?php echo $img->post_title; ?></div>
-		<div class="sthlm-thumb-excerpt hidden"><?php echo $img->post_excerpt; ?></div>
-		<div class="sthlm-thumb-content hidden"><?php echo $img->post_content; ?></div>
-		<div class="sthlm-thumb-guid hidden"><?php echo $img->guid; ?></div>
+		<div class="sthlm-thumb-excerpt"><?php echo $img->post_excerpt; ?></div>
+		<div class="sthlm-thumb-content"><?php echo $img->post_content; ?></div>
+		<div class="sthlm-thumb-tags"><?php echo $tagsOut; ?></div>
 	</div>
 <?php
 }
