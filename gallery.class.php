@@ -6,7 +6,7 @@ class sthlm_gallery {
 			$menu_slug = 'sthlm_gallery',
 			$capability = 4,
 			$title = 'Sthlm Gallery',
-			$meta_order = '_img_order',
+			$meta_order = '_img_order', // don't cange used else were
 			$url = STHLM_GALLERY_PLUGIN_URL; // name for meta data
 
 

@@ -244,3 +244,27 @@
 
 
 .sthlm-thumb-data {display: none}
+
+
+
+
+
+
+
+/*********************************************************/
+/*********************************************************/
+/*
+/*
+/*   EDIT Page/Post
+/*
+/*
+/*********************************************************/
+/*********************************************************/
+
+
+.sthlm-dropdown-gallery {overflow: hidden; border-bottom: 1px solid #ddd; padding: 0 0 10px; margin: 10px 0 10px;}
+
+.sthlm-dropdown-box {float: left; width: 300px;}
+.sthlm-dropdown-box select {width: 270px; margin: 0 0 5px;}
+#sthlm_preview_thumb {height: 100px;}
+

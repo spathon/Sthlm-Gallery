@@ -12,6 +12,7 @@ Author URI:
  * @todo
  *
  * Edit img alt/title and so on in colorbox (dbclick? for edit or smal edit button on hover?)
+ * Split css and load right on right page
  * add categories/tags to images
  * settings page
  * pagination
@@ -20,6 +21,11 @@ Author URI:
  * and much more
  *
  * clean the code
+ *
+ *
+ *
+ * META _thumbnail_id
+ *
  */
 
 
@@ -148,7 +154,7 @@ function sthlm_gallery_include_styles() {
 add_action('media_buttons_context', 'add_sthlm_gallery_button');
 function add_sthlm_gallery_button($context){
 	$img = STHLM_GALLERY_PLUGIN_URL .'/images/img.png';
-	$out = '<a href="#TB_inline?width=450&inlineId=add_sthlm_gallery" class="thickbox" title="' . __("L&auml;gg till galleri", 'sthlm_gallery') . '"><img src="'.$img.'" alt="' . __("L&auml;gg till galleri", 'sthlm_gallery') . '" /></a>';
+	$out = '<a href="#TB_inline?width=640&inlineId=add_sthlm_gallery" class="thickbox" title="' . __("L&auml;gg till galleri", 'sthlm_gallery') . '"><img src="'.$img.'" alt="' . __("L&auml;gg till galleri", 'sthlm_gallery') . '" /></a>';
 	return $context . $out;
 }
 add_action('admin_footer',  'sthlm_gallery_add_mce_popup');
@@ -158,6 +164,27 @@ function sthlm_gallery_add_mce_popup(){
 		
 		
 		jQuery(document).ready(function($){
+
+
+			var $selectGallery = $('#sthlm_select_gallery');
+
+			// Show thumb on select gallery
+			$selectGallery.live('change', function(){
+				var $option = $selectGallery.find('option:selected'),
+					numImg = $option.attr('data-gallery-count'),
+					src = $option.attr('data-gallery-thumb');
+
+
+				// Show the number of images
+				$('#sthlm_gallery_num_img').text(numImg);
+
+				// set the thumb src
+				$('#sthlm_preview_thumb').attr('src', src);
+			});
+
+
+
+
 
 			$('#sthlm_display_style').find('img').live('click', function(){
 				var style = $(this).attr('data-style');
@@ -200,6 +227,8 @@ function sthlm_gallery_add_mce_popup(){
 		<div class="wrap" id="sthlm_add_shortcode">
 
 
+
+			<div class="sthlm-dropdown-gallery">
 			<?php
 			/**
 			 *   List all galleries
@@ -209,14 +238,58 @@ function sthlm_gallery_add_mce_popup(){
 				'numberposts' => -1
 			);
 			$gallery = get_posts($args);
-			if(!empty($gallery)):
+			if(!empty($gallery)): ?>
+				
+				<div class="sthlm-dropdown-box">
 
-				echo '<select id="sthlm_select_gallery">';
-					foreach ( (array) $gallery as $g ):
-						echo '<option value="'.$g->ID.'">'.$g->post_title.'</option>';
-					endforeach;
-				echo '</select>';
-			endif; ?>
+					<h2 class="sthlm-dropdown-title"><?php _e('Select gallery', 'sthlm_gallery') ?></h2>
+					<select id="sthlm_select_gallery">
+						<?php 
+						// Echo the galleries in option
+						$i = 0;
+						foreach ( (array) $gallery as $g ):
+
+							// get the thumbnail
+							$image_id = get_post_thumbnail_id($g->ID);
+							$image_url = wp_get_attachment_image_src($image_id,'thumbnail');
+							$image_url = $image_url[0];
+
+							// if the gallery don't have any images
+							if(empty($image_url)) continue;
+
+							$image_ids = get_post_meta($g->ID, '_img_order', true);
+							$number_images = count($image_ids);
+
+							// save the first img src
+							if($i == 0){ 
+								$first_thumb = $image_url;
+								$first_number = $number_images;
+								$i = 1;
+							}
+
+							// the option
+							echo '<option value="'.$g->ID.'" data-gallery-count="'.$number_images.'" data-gallery-thumb="'.$image_url.'">'.
+									$g->post_title.'</option>';
+
+						endforeach;?>
+
+					</select>
+
+					<div class="sthlm-gallery-img-count">
+						<?php _e('Number of images:', 'sthlm_gallery'); ?>
+						<span id="sthlm_gallery_num_img"><?php echo $first_number; ?></span>
+					</div>
+
+				</div>
+
+			<?php endif; ?>
+
+				<img src="<?php echo $first_thumb; ?>" id="sthlm_preview_thumb" alt="Thumb" />
+			</div>
+
+
+
+
 
 			<label><?php _e('Rader', 'sthlm_gallery'); ?>
 				<input type="text" id="sthlm_rows" />
@@ -266,6 +339,10 @@ function sthlm_gallery_shortcode($atts, $content = null){
 			switch ($style){
 				case 'big_lightbox':
 					include('display/big_lightbox.php');
+					break;
+
+				case 'big_with_thumbs':
+					include('display/big_with_thumbs.php');
 					break;
 
 				case 'thumbs':
