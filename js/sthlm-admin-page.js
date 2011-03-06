@@ -117,7 +117,7 @@ jQuery(document).ready(function($){
 	});
 
 
-	
+	 
 	/**
 	 *
 	 *   Select gallery

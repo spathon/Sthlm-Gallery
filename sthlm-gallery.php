@@ -353,7 +353,7 @@ function sthlm_gallery_shortcode($atts, $content = null){
 
 
 		}// end if
-	}
+	} 
 	return $out;
 
 }

@@ -231,7 +231,7 @@
 
 
 <!--   Put error & success messages in here   -->
-<div id="sthlm_success_error_messages" class="hidden radius-5"></div>
+<div id="sthlm_success_error_messages" class="hidden radius-5"></div> 
 
 
 
