@@ -116,7 +116,11 @@
 			<tr>
 				<!--   Gallery images   -->
 				<td class="sthlm-images-container" id="sthlm_current_gallery_images">
-					&nbsp;
+					<ol id="sthlm_init_message_list">
+						<li><?php _e('Select a gallery above or create a new', 'sthlm_gallery'); ?></li>
+						<li><?php _e('Drag the images here', 'sthlm_gallery'); ?></li>
+					</ol>
+					
 				</td>
 				<!--   All images   -->
 				<td class="sthlm-images-container" id="sthlm_all_images">
@@ -221,6 +225,13 @@
 		</div></div>
 	</div> */ ?>
 </div>
+
+
+
+
+
+<!--   Put error & success messages in here   -->
+<div id="sthlm_success_error_messages" class="hidden radius-5"></div>
 
 
 

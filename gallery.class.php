@@ -197,7 +197,7 @@ class sthlm_gallery {
 			// save the order in the gallery's meta
 			update_post_meta($id, $this->meta_order, $order);
 		}
-
+		echo 'true';
 		die();
 	}
 

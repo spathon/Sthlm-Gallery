@@ -4,6 +4,10 @@
  */
 
 
+//   LANGUAGES?
+// how to handle
+var ERROR_SELECT_A_GALLERY = 'select a gallery first';
+
 jQuery(document).ready(function($){
 
 
@@ -13,8 +17,34 @@ jQuery(document).ready(function($){
 		$currImgContainer = $('#sthlm_current_gallery_images'), // the wrapper for the curr gallery images
 		$allImagesContainer = $('#sthlm_all_images'), // the wrapper for all images
 		dropState = false, // used for drag/drop on init?
-		dummy = 'var';
+		dummy = 'var',
+		is_init = false, // set to true when a gallery is selected
+		// Put all error messages in here and use as a dialogbox
+		$error_box = $('#sthlm_success_error_messages'),
+		// if an change has been made to the gallery and not saved
+		has_changed = false;
 
+
+
+
+
+	/*
+	 *
+	 *   ERROR BOX
+	 *
+	 */
+	// Hide the error box on click
+	$error_box.click(function(){
+		$error_box.addClass('hidden');
+	});
+	function sthlm_success_error(message, type){
+		$error_box.html(message).removeClass('hidden');
+		if(type == null){
+			$error_box.addClass('sthlm-error-message').removeClass('sthlm-success-message');
+		}else{
+			$error_box.addClass('sthlm-success-message').removeClass('sthlm-error-message');
+		}
+	}
 
 
 
@@ -97,6 +127,23 @@ jQuery(document).ready(function($){
 
 		// stop click on remove to fire an event
 		if($(e.target).is('.remove-sthlm-gallery') ) {return;}
+
+
+		// if the gallery has change show an error if not saved
+		if(has_changed){
+			var r = confirm("The gallery has changed do you want to proceed without saving?");
+			if(r == false){
+				return false;
+			}
+			has_changed = false;
+		}
+
+
+		// Remove the init message
+		$('#sthlm_init_message_list').remove();
+
+		// when activate the droppable function
+		is_init = true;
 
 		var $this = $(this),
 			dataID = $this.attr('data-gallery-id');
@@ -202,6 +249,14 @@ jQuery(document).ready(function($){
 			id: id
 		};
 		$.post(ajaxurl, data, function(response) {
+
+			if(response != 'true'){
+				sthlm_success_error('Something went wrong and the settings were not saved');
+			}else{
+				sthlm_success_error('Gallery saved', true);
+			}
+			// set the gallery as saved
+			has_changed = false;
 			// hide loader
 			$loader.addClass('hidden');
 		});
@@ -260,12 +315,20 @@ jQuery(document).ready(function($){
 		drop: function( event, ui ) {
 			var $this = $(this);
 
+			// make droppable only when a gallery has been selected
+			if(!is_init){
+				sthlm_success_error(ERROR_SELECT_A_GALLERY);
+				return;
+			}
+
 			// clone the img to the gallery
 			$this.append(ui.draggable.clone());
 
 			// add class selected to the img
 			ui.draggable.addClass('sthlm-thumb-exist');
 
+			// set the gallery as changed
+			has_changed = true;
 		}
 	});
 
@@ -273,7 +336,11 @@ jQuery(document).ready(function($){
 		placeholder: 'ui-state-highlight',
 		forcePlaceholderSize: true,
 		items: '.sthlm-thumb',
-		helper: 'orginal'//'clone'
+		helper: 'orginal',//'clone'
+		change: function(event, ui) {
+			// set the gallery as changed
+			has_changed = true;
+		}
 	}).disableSelection();
 
 

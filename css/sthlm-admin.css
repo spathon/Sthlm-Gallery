@@ -248,6 +248,18 @@
 
 
 
+/*********************************************************/
+/*
+/*   Misc
+/*
+/*********************************************************/
+#sthlm_success_error_messages  {cursor: pointer; color: #000; font-weight: bold; width: 300px; position: fixed; top: 30%; left: 50%; margin: 0 0 0 -150px; padding: 20px;}
+.sthlm-success-message {background: #D7FFD7; border: 2px solid #00A800;}
+.sthlm-error-message { background: #FFEBE8; border: 2px solid #CC0000; }
+
+
+
+
 
 
 
@@ -268,3 +280,23 @@
 .sthlm-dropdown-box select {width: 270px; margin: 0 0 5px;}
 #sthlm_preview_thumb {height: 100px;}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+.radius-5 {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+}

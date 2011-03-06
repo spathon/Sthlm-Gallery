@@ -1,11 +1,11 @@
 <?php 
 /*
 Plugin Name: Sthlm Gallery
-Plugin URI: 
-Description:
-Version: 0.2
+Plugin URI: http://spathon.com
+Description: Create galleries with the images uploaded to the media library through an easy drag and drop interface. "Media->Gallery"
+Version: 0.3
 Author: Patrik Spathon, Jonatan Fried, Linda Eriksson
-Author URI: 
+Author URI: http://spathon.com
 */
 
 /**
@@ -53,7 +53,7 @@ else:
 	// if user has to old version of wp print a message
 	add_action('admin_notices', "sthlm_gallery_need_wp3");
 	function sthlm_gallery_need_wp3(){
-		echo '<div class="error fade"><p>'. __('Du har en för gammal version av WordPress var vänlig uppdatera för din egen säkerhet.', 'sthlm_gallery') .'</p></div>';
+		echo '<div class="error fade"><p>'. __('The WordPress version you are using is to old, please update for your on safety', 'sthlm_gallery') .'</p></div>';
 	}
 endif; // wp 3.0 or not
 
